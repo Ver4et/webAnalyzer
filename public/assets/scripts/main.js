@@ -88,12 +88,21 @@ function showTree(treeData) {
 
 
 // functions of styles
+function applyTheme(theme) {
+    document.body.className = theme
+    localStorage.setItem("theme", theme)
+}
 function toggleDark() {
-    document.body.classList.toggle('dark-style')
+    applyTheme('dark-style')
 }
 function toggleLite() {
-    document.body.classList.toggle('lite-style')
+    applyTheme('lite-style')
 }
 function toggleRetro() {
-    document.body.classList.toggle('retro')
+    applyTheme('retro')
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const saveTheme = localStorage.getItem('theme')
+    if(saveTheme) document.body.className = saveTheme
+})
