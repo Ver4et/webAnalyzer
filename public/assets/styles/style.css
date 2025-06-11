@@ -1,0 +1,268 @@
+/* Подключение шрифта */
+@font-face {
+    font-family: "PressStart";
+    src: url(../fonts/PressStart2P-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Базовые стили */
+body {
+    color: #fff;
+    background-color: #e7ecf1;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header {
+    height: 75px;
+    background-color: #505050;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header button {
+    display: inline-block;
+    position: relative;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+}
+
+header button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #0087ca;
+    transform: scaleX(0);
+    transform-origin: bottom center;
+    transition: transform 0.25s ease-out;
+}
+
+header button:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15% 0;
+}
+
+.cap-block {
+    font-size: 1.2rem;
+    height: 60%;
+    width: 60%;
+    color: #000;
+    border: 1px solid black;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+#enter_url {
+    height: 30px;
+    width: 100%;
+}
+#enter_url::placeholder {
+    text-align: left;
+    padding: 20px;
+}
+
+.cap-block button {
+    background-color: crimson;
+    border: none;
+    margin: 10px 0;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+/* Lite стиль */
+body.lite-style {
+    color: #fff;
+    background-color: #e7ecf1;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body.lite-style header {
+    background-color: #505050;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body.lite-style .cap-block button:hover {
+    background-color: rgba(220, 20, 60, 0.704);
+}
+
+/* Dark стиль */
+body.dark-style {
+    color: #fff;
+    background-color: #505050;
+}
+
+body.dark-style header {
+    background-color: black;
+}
+
+body.dark-style .cap-block {
+    background-color: #f2f3f4;
+    color: #000;
+}
+/* Retro стиль */
+body.retro {
+    font-family: 'PressStart';
+    background-color: #e2e2e2;
+}
+body.retro header {
+    background-color: #000;
+    padding: 15px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+}
+body.retro input {
+    background-color: #fff;
+    border: 2px solid #121212;
+    font-family: 'PressStart', monospace;
+}
+
+body.retro button {
+    background-color: #fff;
+    color: #4b3621;
+    border: solid 0.125rem #121212;
+    box-shadow: 0.25rem 0.25rem #121212;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+body.retro button:hover {
+    background-color: #e6d68a;
+    box-shadow: 0.4rem 0.4rem #8b7d4d;
+    transform: translateY(-2px);
+}
+body.retro .modal-content {
+    background: #ffebcd;
+    border: 2px solid #000;
+}
+
+/* Модальное окно */
+.modal_ints,
+.modal-styles {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal_ints .modal-content,
+.modal-styles .modal-content {
+    margin: 15% auto;
+    padding: 20px;
+    background-color: #fefefe;
+    border: 2px solid black;
+    border-radius: 16px;
+    color: #000;
+    font-size: 1.2rem;
+}
+
+.modal-styles .modal-content {
+    width: 20%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Блок кнопок */
+.block-btn {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.block-btn button {
+    margin: 10px;
+    padding: 10px 40px;
+    cursor: pointer;
+    transition: all 1s;
+}
+
+.block-btn button:nth-child(1) {
+    background-color: crimson;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+}
+.block-btn button:nth-child(1):hover {
+    background-color: rgba(220, 20, 60, 0.704);
+    box-shadow: 0 0 5px 0 rgba(220, 20, 60, 0.704) inset, 0 0 5px 0 rgba(220, 20, 60, 0.704);
+}
+
+.block-btn button:nth-child(2) {
+    background-color: white;
+    padding: 0.75rem 2.5rem;
+    border-radius: 0.25rem;
+    border: solid 0.125rem #121212;
+    box-shadow: 0.25rem 0.25rem #121212;
+    transition: transform 50ms, box-shadow 50ms;
+}
+.block-btn button:nth-child(2):active {
+    transform: translate(0.125rem, 0.125rem);
+    box-shadow: 0.125rem 0.125rem #121212;
+}
+
+.block-btn button:nth-child(3) {
+    background-color: black;
+    color: #fff;
+}
+.block-btn button:nth-child(3):hover {
+    background-color: rgb(58, 57, 57);
+    box-shadow: 0 0 5px 0 rgb(58, 57, 57) inset, 0 0 5px 0 rgb(58, 57, 57);
+}
+
+/* results */
+#result {
+    margin: 5% 1%;
+
+    display: flex;
+    align-self: flex-start;
+
+    color: #000;
+}
+.r-inform {
+    display: flex;
+    align-self: flex-start;
+
+    margin: 5%;
+}

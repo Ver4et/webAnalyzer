@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/styles/style.css">
+    <title>Web-Analyzer</title>
+</head>
+<body>
+    <header>
+        <img src="./assets/img/logo.png" alt="logo" height="80px" width="160px">
+        <h1>Web-Analyzer</h1>
+        <div class="block-controls">
+            <button onclick="modal_instruction()">Инструкция</button>
+            <button onclick="modal_style()">Стили</button>
+        </div>
+    </header>
+    <main>
+        <section class="cap-block">
+            <label for="enter_url">Введите ссылку:</label>
+            <input type="text" id="enter_url" placeholder="http://example.com">
+            <button id="button">Анализировать</button>
+        </section>
+        <section id="modal_main" >
+            <div class="modal_ints" id="modal_instruction">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal_ints()">&times;</span>
+                    <h2>Инструкция по эксплуатации:</h2>
+                    <p>Для начала работы с данным веб-приложением необходимо в панель ввода ввести ссылку на сайт.</p>
+                    <p><strong>Для выбора темы необходимо: </strong> <br>
+                        Нажать на соответствующую кнопку "Стили", после чего появится интерактивное меню, где можно выбрать смену темы. <br>
+                        Выбранные на данный момент темы обозначаются красным индикатором.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-styles" id="m-styles">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal_styles()">&times;</span>
+                    <div class="block-btn">
+                        <button onclick="toggleLite()">Default</button>
+                        <button onclick="toggleRetro()">Retro</button>
+                        <button onclick="toggleDark()">Dark</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="result">
+            <div class="r-inform">
+                <h2 id="titleOut"></h2>
+            </div>
+        </section>
+    </main>
+    <script src="assets/scripts/main.js" defer></script>
+</body>
+</html>
