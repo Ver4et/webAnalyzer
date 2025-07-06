@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <img src="./assets/img/logo.png" alt="logo" height="80px" width="160px">
+        <img src="./assets/img/logo.svg" alt="logo" height="60px" width="100px" loading="lazy">
         <h1>Web-Analyzer</h1>
         <div class="block-controls">
             <button onclick="modal_instruction()">Инструкция</button>
@@ -20,6 +20,9 @@
             <label for="enter_url">Введите ссылку:</label>
             <input type="text" id="enter_url" placeholder="http://example.com">
             <button id="button">Анализировать</button>
+            <div class="progress-container">
+                <div id="progress-bar"></div>
+            </div>
         </section>
         <section id="modal_main" >
             <div class="modal_ints" id="modal_instruction">
@@ -29,7 +32,7 @@
                     <p>Для начала работы с данным веб-приложением необходимо в панель ввода ввести ссылку на сайт.</p>
                     <p><strong>Для выбора темы необходимо: </strong> <br>
                         Нажать на соответствующую кнопку "Стили", после чего появится интерактивное меню, где можно выбрать смену темы. <br>
-                        Выбранные на данный момент темы обозначаются красным индикатором.
+                        
                     </p>
                 </div>
             </div>
