@@ -36,16 +36,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById("enter_url")
 
     button.addEventListener("click", async () => {
-        const url = input.value.trim()
+        let url = input.value.trim()
         if(!url) {
             return alert("Введите ссылку")
+        }
+
+        if (!/^https?:\/\//i.test(url)) url = `https://${url}`
+
+        try {
+            new URL(url)
+        } catch {
+            return alert('Введите корректную ссылку')
         }
         
         progressContainer.style.display = 'block'
         progressBar.style.width = '30%'
+        button.disabled = true
         
         try {
-            const res = await fetch('http://localhost:3000/bold-url', {
+            const res = await fetch('/bold-url', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({url})
@@ -71,6 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Не удалось загрузить данные: ' + e.message)
             progressContainer.style.display = 'none'
             progressBar.style.width = '0%'
+        } finally {
+            button.disabled = false
         }
     })
 
@@ -91,17 +102,19 @@ function showMainInfo(data) {
     titleElem.textContent = `Заголовок сайта: ${data.title || 'нет данных'}`
     container.appendChild(titleElem)
 
-    const metaDiv = document.createElement('div')
-    metaDiv.innerHTML = `
-        <p><strong>Описание (description):</strong> ${data.metaDescription || 'нет данных'}</p>
-        <p><strong>Ключевые слова (keywords):</strong> ${data.metaKeywords || 'нет данных'}</p>
-        <p><strong>OpenGraph Title:</strong> ${data.ogTitle || 'нет данных'}</p>
-        <p><strong>OpenGraph Description:</strong> ${data.ogDescription || 'нет данных'}</p>
-    `
+        const metaDiv = document.createElement('div')
+        appendField(metaDiv, 'Описание (description):', data.metaDescription)
+        appendField(metaDiv, 'Ключевые слова (keywords):', data.metaKeywords)
+        appendField(metaDiv, 'OpenGraph Title:', data.ogTitle)
+        appendField(metaDiv, 'OpenGraph Description:', data.ogDescription)
     container.appendChild(metaDiv)
 
     const cssDiv = document.createElement('div')
-    cssDiv.innerHTML = `<p><strong>CSS-файлы (${data.cssLinks.length}):</strong></p>`
+        const cssTitle = document.createElement('p')
+        const cssLabel = document.createElement('strong')
+        cssLabel.textContent = `CSS-файлы (${data.cssLinks.length}):`
+        cssTitle.appendChild(cssLabel)
+        cssDiv.appendChild(cssTitle)
     if(data.cssLinks.length) {
         const ulCss = document.createElement('ul')
         data.cssLinks.forEach(link => {
@@ -111,15 +124,27 @@ function showMainInfo(data) {
         })
         cssDiv.appendChild(ulCss)
     } else {
-        cssDiv.innerHTML += '<p>Отсутствуют</p>'
+            const emptyCss = document.createElement('p')
+            emptyCss.textContent = 'Отсутствуют'
+            cssDiv.appendChild(emptyCss)
     }
     container.appendChild(cssDiv)
 
     const inlineStylesDiv = document.createElement('p')
-    inlineStylesDiv.innerHTML = `<strong>Количество inline-стилей:</strong> ${data.inlineStylesCount || 0}`
+        const inlineStylesLabel = document.createElement('strong')
+        inlineStylesLabel.textContent = 'Количество inline-стилей: '
+        inlineStylesDiv.append(inlineStylesLabel, document.createTextNode(data.inlineStylesCount || 0))
     container.appendChild(inlineStylesDiv)
 
     resultSection.appendChild(container)
+
+    function appendField(container, label, value) {
+        const paragraph = document.createElement('p')
+        const strong = document.createElement('strong')
+        strong.textContent = `${label} `
+        paragraph.append(strong, document.createTextNode(value || 'нет данных'))
+        container.appendChild(paragraph)
+    }
 }
 
 function showTree(treeData) {
@@ -142,15 +167,14 @@ function showTree(treeData) {
 
     treeData.forEach(element => {
         const li = document.createElement('li')
-        li.innerHTML = `<strong>URL:</strong> ${element.url}<br>
-                        <strong>Заголовок:</strong> ${element.title || 'нет данных'}<br>
-                        <strong>Описание:</strong> ${element.metaDescription || 'нет данных'}<br>
-                        <strong>Ключевые слова:</strong> ${element.metaKeywords || 'нет данных'}<br>
-                        <strong>OpenGraph Title:</strong> ${element.ogTitle || 'нет данных'}<br>
-                        <strong>OpenGraph Description:</strong> ${element.ogDescription || 'нет данных'}<br>
-                        <strong>CSS-файлы:</strong> ${element.cssLinks.length} шт.<br>
-                        <strong>Количество inline-стилей:</strong> ${element.inlineStylesCount || 0}
-                        `
+            appendField(li, 'URL:', element.url)
+            appendField(li, 'Заголовок:', element.title)
+            appendField(li, 'Описание:', element.metaDescription)
+            appendField(li, 'Ключевые слова:', element.metaKeywords)
+            appendField(li, 'OpenGraph Title:', element.ogTitle)
+            appendField(li, 'OpenGraph Description:', element.ogDescription)
+            appendField(li, 'CSS-файлы:', `${element.cssLinks.length} шт.`)
+            appendField(li, 'Количество inline-стилей:', element.inlineStylesCount || 0)
 
         if(element.children && element.children.length) {
             const subUl = document.createElement('ul')

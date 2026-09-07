@@ -1,6 +1,7 @@
 const express = require('express')
 const puppeteer = require('puppeteer')
 const cheerio = require('cheerio')
+const fs = require('fs')
 const path = require('path')
 
 const app = express()
@@ -15,8 +16,16 @@ let browserInstance = null
 
 async function getBrowser() {
   if (!browserInstance) {
+    const systemChromePath = process.platform === 'win32'
+      ? path.join(process.env.PROGRAMFILES || '', 'Google', 'Chrome', 'Application', 'chrome.exe')
+      : ''
+    const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || (
+      fs.existsSync(systemChromePath) ? systemChromePath : undefined
+    )
+
     browserInstance = await puppeteer.launch({
       headless: true,
+      executablePath,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     })
   }
@@ -101,8 +110,19 @@ app.post('/bold-url', async (req, res) => {
     return res.status(400).send('URL не указан')
   }
 
+  let parsedUrl
   try {
-    const rootData = await parsePage(url)
+    parsedUrl = new URL(url)
+  } catch {
+    return res.status(400).send('Некорректный URL')
+  }
+
+  if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+    return res.status(400).send('Поддерживаются только HTTP и HTTPS URL')
+  }
+
+  try {
+    const rootData = await parsePage(parsedUrl.href)
 
     const children = await Promise.all(
       rootData.links.slice(0, 5).map(async (link) => {

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/assets/styles/style.css">
     <title>Web-Analyzer</title>
 </head>
-<body>
+<body class="lite-style">
     <header>
         <img src="./assets/img/logo.svg" alt="logo" height="60px" width="100px" loading="lazy">
         <h1>Web-Analyzer</h1>
@@ -18,8 +18,8 @@
     <main>
         <section class="cap-block">
             <label for="enter_url">Введите ссылку:</label>
-            <input type="text" id="enter_url" placeholder="http://example.com">
-            <button id="button">Анализировать</button>
+            <input type="url" id="enter_url" placeholder="https://example.com" autocomplete="url" required>
+            <button id="button" type="button">Анализировать</button>
             <div class="progress-container">
                 <div id="progress-bar"></div>
             </div>
