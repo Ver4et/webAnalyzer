@@ -11,8 +11,8 @@
         <img src="./assets/img/logo.svg" alt="logo" height="60px" width="100px" loading="lazy">
         <h1>Web-Analyzer</h1>
         <div class="block-controls">
-            <button onclick="modal_instruction()">Инструкция</button>
-            <button onclick="modal_style()">Стили</button>
+            <button id="btn_instruction">Инструкция</button>
+            <button id="btn_style">Стили</button>
         </div>
     </header>
     <main>
@@ -27,7 +27,7 @@
         <section id="modal_main" >
             <div class="modal_ints" id="modal_instruction">
                 <div class="modal-content">
-                    <span class="close" onclick="closeModal_ints()">&times;</span>
+                    <span class="close" id="close_ints">&times;</span>
                     <h2>Инструкция по эксплуатации:</h2>
                     <p>Для начала работы с данным веб-приложением необходимо в панель ввода ввести ссылку на сайт.</p>
                     <p><strong>Для выбора темы необходимо: </strong> <br>
@@ -38,11 +38,11 @@
             </div>
             <div class="modal-styles" id="m-styles">
                 <div class="modal-content">
-                    <span class="close" onclick="closeModal_styles()">&times;</span>
+                    <span class="close" id="close_styles">&times;</span>
                     <div class="block-btn">
-                        <button onclick="toggleLite()">Default</button>
-                        <button onclick="toggleRetro()">Retro</button>
-                        <button onclick="toggleDark()">Dark</button>
+                        <button id="btn_theme_default">Default</button>
+                        <button id="btn_theme_retro">Retro</button>
+                        <button id="btn_theme_dark">Dark</button>
                     </div>
                 </div>
             </div>

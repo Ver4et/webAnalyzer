@@ -3,35 +3,40 @@ let modal_styles = document.getElementById('m-styles')
 let progressBar = document.getElementById('progress-bar')
 let progressContainer = document.querySelector('.progress-container')
 
-function modal_instruction() {
-    modal_inst.style.display = modal_inst.style.display === 'block' ? 'none' : 'block'
-
-    window.onclick = function(event) {
-        if(event.target == modal_inst) {
-            modal_inst.style.display = 'none'
-        }
-    }
+function applyTheme(theme) {
+    document.body.className = theme
+    localStorage.setItem("theme", theme)
 }
-
-function modal_style() {
-    modal_styles.style.display = modal_styles.style.display === 'block' ? 'none' : 'block'
-
-    window.onclick = function(event) {
-        if(event.target == modal_styles) {
-            modal_styles.style.display = 'none'
-        }
-    }
+function toggleDark() {
+    applyTheme('dark-style')
 }
-
-function closeModal_ints() {
-    modal_inst.style.display = 'none'
+function toggleLite() {
+    applyTheme('lite-style')
 }
-
-function closeModal_styles() {
-    modal_styles.style.display = 'none'
+function toggleRetro() {
+    applyTheme('retro')
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btn_instruction').addEventListener('click', () => {
+        modal_inst.style.display = modal_inst.style.display === 'block' ? 'none' : 'block'
+    });
+
+    document.getElementById('btn_style').addEventListener('click', () => {
+        modal_styles.style.display = modal_styles.style.display === 'block' ? 'none' : 'block'
+    });
+
+    document.getElementById('close_ints').addEventListener('click', () => modal_inst.style.display = 'none')
+    document.getElementById('close_styles').addEventListener('click', () => modal_styles.style.display = 'none')
+
+    document.getElementById('btn_theme_default').addEventListener('click', toggleLite)
+    document.getElementById('btn_theme_retro').addEventListener('click', toggleRetro)
+    document.getElementById('btn_theme_dark').addEventListener('click', toggleDark)
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal_inst) modal_inst.style.display = 'none'
+        if (event.target === modal_styles) modal_styles.style.display = 'none'
+    })
     const button = document.getElementById("button")
     const input = document.getElementById("enter_url")
 
@@ -192,18 +197,4 @@ function showTree(treeData) {
 
     treeContainer.appendChild(ul)
     resultSection.appendChild(treeContainer)
-}
-
-function applyTheme(theme) {
-    document.body.className = theme
-    localStorage.setItem("theme", theme)
-}
-function toggleDark() {
-    applyTheme('dark-style')
-}
-function toggleLite() {
-    applyTheme('lite-style')
-}
-function toggleRetro() {
-    applyTheme('retro')
 }
