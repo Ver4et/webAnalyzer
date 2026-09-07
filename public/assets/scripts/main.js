@@ -109,15 +109,16 @@ function showMainInfo(data) {
         appendField(metaDiv, 'OpenGraph Description:', data.ogDescription)
     container.appendChild(metaDiv)
 
+    const cssLinks = Array.isArray(data.cssLinks) ? data.cssLinks : []
     const cssDiv = document.createElement('div')
         const cssTitle = document.createElement('p')
         const cssLabel = document.createElement('strong')
-        cssLabel.textContent = `CSS-файлы (${data.cssLinks.length}):`
+        cssLabel.textContent = `CSS-файлы (${cssLinks.length}):`
         cssTitle.appendChild(cssLabel)
         cssDiv.appendChild(cssTitle)
-    if(data.cssLinks.length) {
+    if(cssLinks.length) {
         const ulCss = document.createElement('ul')
-        data.cssLinks.forEach(link => {
+        cssLinks.forEach(link => {
             const li = document.createElement('li')
             li.textContent = link
             ulCss.appendChild(li)
@@ -137,14 +138,14 @@ function showMainInfo(data) {
     container.appendChild(inlineStylesDiv)
 
     resultSection.appendChild(container)
+}
 
-    function appendField(container, label, value) {
-        const paragraph = document.createElement('p')
-        const strong = document.createElement('strong')
-        strong.textContent = `${label} `
-        paragraph.append(strong, document.createTextNode(value || 'нет данных'))
-        container.appendChild(paragraph)
-    }
+function appendField(container, label, value) {
+    const paragraph = document.createElement('p')
+    const strong = document.createElement('strong')
+    strong.textContent = `${label} `
+    paragraph.append(strong, document.createTextNode(value || 'нет данных'))
+    container.appendChild(paragraph)
 }
 
 function showTree(treeData) {
@@ -173,7 +174,7 @@ function showTree(treeData) {
             appendField(li, 'Ключевые слова:', element.metaKeywords)
             appendField(li, 'OpenGraph Title:', element.ogTitle)
             appendField(li, 'OpenGraph Description:', element.ogDescription)
-            appendField(li, 'CSS-файлы:', `${element.cssLinks.length} шт.`)
+            appendField(li, 'CSS-файлы:', `${Array.isArray(element.cssLinks) ? element.cssLinks.length : 0} шт.`)
             appendField(li, 'Количество inline-стилей:', element.inlineStylesCount || 0)
 
         if(element.children && element.children.length) {
